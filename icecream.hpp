@@ -3134,6 +3134,7 @@ namespace detail {
                 if (!current->is_leaf())
                 {
                 	auto&& children = current->get_stem().children;
+                	to_visit.reserve(to_visit.size() + children.size());
                 	std::transform(
                 		children.begin(),
                 		children.end(),
