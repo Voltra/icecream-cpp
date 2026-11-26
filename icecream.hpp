@@ -5499,11 +5499,15 @@ namespace detail {
                     }
                 };
 
+        	auto arguments = split_arguments(this->arg_names_);
             auto arg_names = std::vector<StringView>{};
-            for (auto const& argument : split_arguments(this->arg_names_))
-            {
-                arg_names.push_back(pick_argument_name(argument));
-            }
+        	arg_names.reserve(arguments.size());
+        	std::transform(
+				std::cbegin(arguments),
+				std::cend(arguments),
+				std::back_inserter(arg_names),
+				pick_argument_name
+        	);
 
             if (this->is_ic_apply_)
             {
