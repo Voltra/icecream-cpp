@@ -3064,21 +3064,23 @@ namespace detail {
             , n_code_unit{
                 [this]()
                 {
+                	auto&& stem = this->get_stem();
+
                     // The enclosing chars.
-                    auto result = this->get_stem().open.size() + this->get_stem().close.size();
+                    auto result = stem.open.size() + stem.close.size();
 
                     // count the size of each child
-                    for (auto const& child : this->get_stem().children)
+                    for (auto const& child : stem.children)
                     {
                         result += child.n_code_unit;
                     }
 
                     // The separators.
-                    if (this->get_stem().children.size() > 1)
+                    if (stem.children.size() > 1)
                     {
                         result +=
-                            (this->get_stem().children.size() - 1)
-                            * this->get_stem().separator.size();
+                            (stem.children.size() - 1)
+                            * stem.separator.size();
                     }
 
                     return result;
@@ -3087,23 +3089,25 @@ namespace detail {
             , n_code_point{
                 [this]()
                 {
+                	auto&& stem = this->get_stem();
+
                     // The enclosing chars.
                     auto result =
-                        count_utf8_code_point(this->get_stem().open)
-                        + count_utf8_code_point(this->get_stem().close);
+                        count_utf8_code_point(stem.open)
+                        + count_utf8_code_point(stem.close);
 
                     // count the size of each child
-                    for (auto const& child : this->get_stem().children)
+                    for (auto const& child : stem.children)
                     {
                         result += child.n_code_point;
                     }
 
                     // The separators.
-                    if (this->get_stem().children.size() > 1)
+                    if (stem.children.size() > 1)
                     {
                         result +=
-                            (this->get_stem().children.size() - 1)
-                            * count_utf8_code_point(this->get_stem().separator);
+                            (stem.children.size() - 1)
+                            * count_utf8_code_point(stem.separator);
                     }
 
                     return result;
