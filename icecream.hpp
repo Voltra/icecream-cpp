@@ -42,6 +42,7 @@
 #include <limits>
 #include <memory>
 #include <mutex>
+#include <numeric>
 #include <ostream>
 #include <sstream>
 #include <stdexcept>
@@ -5148,20 +5149,23 @@ namespace detail {
         auto const one_line_forest_n_code_points =
             [&]() -> size_t
             {
-                auto n = count_utf8_code_point(prefix);
+            	auto n = std::accumulate(
+            		std::cbegin(forest),
+            		std::cend(forest),
+            		count_utf8_code_point(prefix),
+            		[](size_t count, const std::tuple<StringView, PrintingNode>& name_tree){
+            			return count
+							+ count_utf8_code_point(std::get<0>(name_tree))
+							+ count_utf8_code_point(": ")
+							+ std::get<1>(name_tree).code_point_length();
+            		}
+				);
 
-                for (auto const& name_tree : forest)
-                {
-                    n +=
-                        count_utf8_code_point(std::get<0>(name_tree))
-                        + count_utf8_code_point(": ")
-                        + std::get<1>(name_tree).code_point_length();
-                }
-
+            	auto size = forest.size();
                 // The ", " separators between variables.
-                if (forest.size() > 1)
+                if (size > 1)
                 {
-                    n += (forest.size() - 1) * count_utf8_code_point(", ");
+                    n += (size - 1) * count_utf8_code_point(", ");
                 }
 
                 return n;
