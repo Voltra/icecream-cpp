@@ -5556,7 +5556,7 @@ namespace detail {
         std::string elements_fmt_;
         Optional<Slice> mb_slice_;
         Config_* config_ = nullptr;
-        int line_;
+        int line_ = 0;
         std::string src_location_;
         std::string file_;
         std::string function_;
