@@ -3070,17 +3070,20 @@ namespace detail {
                     // The enclosing chars.
                     auto result = stem.open.size() + stem.close.size();
 
+                	auto&& children = stem.children;
+
                     // count the size of each child
-                    for (auto const& child : stem.children)
+                    for (auto const& child : children)
                     {
                         result += child.n_code_unit;
                     }
 
                     // The separators.
-                    if (stem.children.size() > 1)
+                	auto children_count = children.size();
+                    if (children_count > 1)
                     {
                         result +=
-                            (stem.children.size() - 1)
+                            (children_count - 1)
                             * stem.separator.size();
                     }
 
