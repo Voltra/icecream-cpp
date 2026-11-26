@@ -5053,10 +5053,12 @@ namespace detail {
         }
         result +=  + "\n";
 
-        for (auto it = forest.begin(); it != forest.end(); ++it)
+    	auto forest_end_it = forest.end();
+        for (auto it = forest.begin(); it != forest_end_it; ++it)
         {
-            auto const& arg_name = std::get<0>(*it);
-            auto const& tree = std::get<1>(*it);
+        	auto&& value = *it;
+            auto const& arg_name = std::get<0>(value);
+            auto const& tree = std::get<1>(value);
 
             result += std::string(Config_::INDENT_BASE, ' ') + arg_name.to_string() + ": ";
             if (count_utf8_code_point(result) + tree.code_point_length() < line_wrap_width)
@@ -5068,7 +5070,7 @@ namespace detail {
                 result += tree.print(2, line_wrap_width);
             }
 
-            if (it+1 != forest.end())
+            if (it+1 != forest_end_it)
             {
                 result += ",\n";
             }
