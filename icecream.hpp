@@ -5020,14 +5020,16 @@ namespace detail {
             result += context.to_string() + delimiter.to_string();
         }
 
-        for (auto it = forest.begin(); it != forest.end(); ++it)
+    	auto forest_end_it = forest.end();
+        for (auto it = forest.begin(); it != forest_end_it; ++it)
         {
-            auto const& arg_name = std::get<0>(*it);
-            auto const& tree = std::get<1>(*it);
+        	auto&& value = *it;
+            auto const& arg_name = std::get<0>(value);
+            auto const& tree = std::get<1>(value);
 
             result += arg_name.to_string() + ": " + tree.print();
 
-            if (it+1 != forest.end())
+            if (it+1 != forest_end_it)
             {
                     result += ", ";
             }
