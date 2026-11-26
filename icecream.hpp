@@ -3161,23 +3161,28 @@ namespace detail {
             }
             else
             {
-                result = this->get_stem().open;
+            	auto&& stem = this->get_stem();
+                result = stem.open;
+
+            	auto&& children = stem.children;
+            	auto children_end_it = children.cend();
 
                 for (
-                    auto it = this->get_stem().children.cbegin();
-                    it != this->get_stem().children.cend();
+                    auto it = children.cbegin();
+                    it != children_end_it;
+                    // do nothing
                 ){
                     result += it->print();
 
                     ++it;
 
-                    if (it != this->get_stem().children.cend())
+                    if (it != children_end_it)
                     {
-                        result += this->get_stem().separator;
+                        result += stem.separator;
                     }
                 }
 
-                result += this->get_stem().close;
+                result += stem.close;
             }
 
             return result;
@@ -3196,17 +3201,20 @@ namespace detail {
             }
             else
             {
-                result = this->get_stem().open;
+            	auto&& stem = this->get_stem();
+                result = stem.open;
                 result += "\n";
 
-                auto const indent_lenght = indent_level * Config_::INDENT_BASE ;
+                auto const indent_length = indent_level * Config_::INDENT_BASE ;
+            	auto&& children = stem.children;
+            	auto children_end_it = children.cend();
                 for (
-                    auto it = this->get_stem().children.cbegin();
-                    it != this->get_stem().children.cend();
+                    auto it = children.cbegin();
+                    it != children_end_it;
                 ){
                     result += std::string(indent_level * Config_::INDENT_BASE, ' ');
 
-                    if (indent_lenght + it->n_code_point <= line_wrap_width)
+                    if (indent_length + it->n_code_point <= line_wrap_width)
                     {
                         result += it->print();
                     }
@@ -3217,9 +3225,9 @@ namespace detail {
 
                     ++it;
 
-                    if (it != this->get_stem().children.cend())
+                    if (it != children_end_it)
                     {
-                        result += this->get_stem().separator;
+                        result += stem.separator;
                         result += "\n";
                     }
                     else
@@ -3230,7 +3238,7 @@ namespace detail {
 
                 result +=
                     std::string((indent_level-1) * Config_::INDENT_BASE, ' ')
-                    + this->get_stem().close;
+                    + stem.close;
             }
 
             return result;
