@@ -3132,10 +3132,13 @@ namespace detail {
 
                 if (!current->is_leaf())
                 {
-                    for (auto& child : current->get_stem().children)
-                    {
-                        to_visit.push_back(&child);
-                    }
+                	auto&& children = current->get_stem().children;
+                	std::transform(
+                		children.begin(),
+                		children.end(),
+                		std::back_inserter(to_visit),
+                		std::addressof<PrintingNode>()
+					);
                 }
                 else if (current->get_leaf() == key)
                 {
