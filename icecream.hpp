@@ -24,6 +24,7 @@
 #ifndef ICECREAM_HPP_INCLUDED
 #define ICECREAM_HPP_INCLUDED
 
+#include <algorithm>
 #include <cassert>
 #include <cerrno>
 #include <climits>
@@ -2158,11 +2159,7 @@ namespace icecream{ namespace detail
         // Expects `str` in "output encoding".
         auto operator()(StringView str) -> void
         {
-            for (auto const& c : str)
-            {
-                *this->it_ = c;
-                ++this->it_;
-            }
+        	std::copy(str.begin(), str.end(), this->it_);
         }
 
     private:
