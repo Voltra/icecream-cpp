@@ -5651,9 +5651,9 @@ namespace detail {
         std::string function;
 
         int current_idx = 0;
-        ptrdiff_t start;
-        ptrdiff_t stop;
-        ptrdiff_t step;
+        ptrdiff_t start = 0;
+        ptrdiff_t stop = 0;
+        ptrdiff_t step = 1;
         Optional<std::string> slice_error;
 
         explicit RangeView(RangeViewArgs<Proj> par)
@@ -5667,6 +5667,7 @@ namespace detail {
             , line(par.line_)
             , file(par.file_)
             , function(par.function_)
+        	, slice_error{}
         {}
 
         auto normalize_slice() -> void
