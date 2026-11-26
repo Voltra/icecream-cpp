@@ -3097,17 +3097,20 @@ namespace detail {
                         count_utf8_code_point(stem.open)
                         + count_utf8_code_point(stem.close);
 
+                	auto&& children = stem.children;
+
                     // count the size of each child
-                    for (auto const& child : stem.children)
+                    for (auto const& child : children)
                     {
                         result += child.n_code_point;
                     }
 
                     // The separators.
-                    if (stem.children.size() > 1)
+                	auto children_count = children.size();
+                    if (children_count > 1)
                     {
                         result +=
-                            (stem.children.size() - 1)
+                            (children_count - 1)
                             * count_utf8_code_point(stem.separator);
                     }
 
