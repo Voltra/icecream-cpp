@@ -2322,20 +2322,20 @@ namespace icecream{ namespace detail
 
         auto is_enabled() const -> bool
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             return this->enabled_.value();
         }
 
         auto enable() -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->enabled_ = true;
             return *this;
         }
 
         auto disable() -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->enabled_ = false;
             return *this;
         }
@@ -2366,72 +2366,72 @@ namespace icecream{ namespace detail
                 , Config&
             >::type
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->prefix_ = detail::Prefix(detail::to_invocable(std::forward<Ts>(value))...);
             return *this;
         }
 
         auto decay_char_array() const -> bool
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             return this->decay_char_array_.value();
         }
 
         auto decay_char_array(bool value) -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->decay_char_array_ = value;
             return *this;
         }
 
         auto show_c_string() const -> bool
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             return this->show_c_string_.value();
         }
 
         auto show_c_string(bool value) -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->show_c_string_ = value;
             return *this;
         }
 
         auto force_range_strategy() const -> bool
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             return this->force_range_strategy_.value();
         }
 
         auto force_range_strategy(bool value) -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->force_range_strategy_ = value;
             return *this;
         }
 
         auto force_tuple_strategy() const -> bool
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             return this->force_tuple_strategy_.value();
         }
 
         auto force_tuple_strategy(bool value) -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->force_tuple_strategy_ = value;
             return *this;
         }
 
         auto force_variant_strategy() const -> bool
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             return this->force_variant_strategy_.value();
         }
 
         auto force_variant_strategy(bool value) -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->force_variant_strategy_ = value;
             return *this;
         }
@@ -2439,7 +2439,7 @@ namespace icecream{ namespace detail
             std::function<std::string(wchar_t const*, size_t)>&& transcoder
         ) -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->wide_string_transcoder_ =
                 [transcoder](detail::WStringView str) -> std::string
                 {
@@ -2453,7 +2453,7 @@ namespace icecream{ namespace detail
             std::function<std::string(std::wstring_view)>&& transcoder
         ) -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->wide_string_transcoder_ =
                 [transcoder](detail::WStringView str) -> std::string
                 {
@@ -2467,7 +2467,7 @@ namespace icecream{ namespace detail
             std::function<std::string(char32_t const*, size_t)>&& transcoder
         ) -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->unicode_transcoder_ =
                 [transcoder](detail::U32StringView str) -> std::string
                 {
@@ -2481,7 +2481,7 @@ namespace icecream{ namespace detail
             std::function<std::string(std::u32string_view)>&& transcoder
         ) -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->unicode_transcoder_ =
                 [transcoder](detail::U32StringView str) -> std::string
                 {
@@ -2495,7 +2495,7 @@ namespace icecream{ namespace detail
             std::function<std::string(char const*, size_t)>&& transcoder
         ) -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->output_transcoder_ =
                 [transcoder](detail::StringView str) -> std::string
                 {
@@ -2507,7 +2507,7 @@ namespace icecream{ namespace detail
     #if defined(ICECREAM_STRING_VIEW_HEADER)
         auto output_transcoder(std::function<std::string(std::string_view)>&& transcoder) -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->output_transcoder_ =
                 [transcoder](detail::StringView str) -> std::string
                 {
@@ -2519,39 +2519,39 @@ namespace icecream{ namespace detail
 
         auto line_wrap_width() const -> size_t
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             return this->line_wrap_width_.value();
         }
 
         auto line_wrap_width(size_t value) -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->line_wrap_width_ = value;
             return *this;
         }
 
         auto include_context() const -> bool
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             return this->include_context_.value();
         }
 
         auto include_context(bool value) -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->include_context_ = value;
             return *this;
         }
 
         auto context_delimiter() const -> std::string
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             return this->context_delimiter_.value();
         }
 
         auto context_delimiter(std::string value) -> Config&
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->context_delimiter_ = value;
             return *this;
         }
@@ -2562,7 +2562,7 @@ namespace icecream{ namespace detail
 
         auto set_output(std::ostream& stream) -> void
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->output_ = detail::Output<std::ostream>{stream};
         }
 
@@ -2572,7 +2572,7 @@ namespace icecream{ namespace detail
                 detail::has_push_back_T<T, char>::value
             >::type
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
 
             using OSIt = std::back_insert_iterator<T>;
             this->output_ = detail::Output<OSIt>{OSIt{container}};
@@ -2584,7 +2584,7 @@ namespace icecream{ namespace detail
                 detail::is_T_output_iterator<T, char>::value
             >::type
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->output_ = detail::Output<T>{iterator};
         }
 
@@ -2718,31 +2718,31 @@ namespace detail {
 
         auto write_to_output(std::string const& str) -> void
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             this->output_.value()(str);
         }
 
         auto gen_prefix() -> std::string
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             return this->prefix_.value()();
         }
 
         auto transcode_wide_string(WStringView str) const -> std::string
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             return this->wide_string_transcoder_.value()(str);
         }
 
         auto transcode_unicode(U32StringView str) const -> std::string
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             return this->unicode_transcoder_.value()(str);
         }
 
         auto transcode_output(StringView str) const -> std::string
         {
-            std::lock_guard<std::mutex> guard(this->attribute_mutex);
+            std::lock_guard<std::mutex> guard{this->attribute_mutex};
             return this->output_transcoder_.value()(str);
         }
 
